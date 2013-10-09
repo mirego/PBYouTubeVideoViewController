@@ -57,6 +57,9 @@ const CGFloat YouTubeStandardPlayerHeight = 390;
     self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.webView.delegate = self;
     [self.view addSubview:self.webView];
+    
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(didTapDoneButton)];
+    [self.navigationItem setLeftBarButtonItem:doneButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -88,6 +91,13 @@ const CGFloat YouTubeStandardPlayerHeight = 390;
 - (void)stop
 {
     [self.webView stringByEvaluatingJavaScriptFromString:@"player.stopVideo();"];
+}
+
+- (void)didTapDoneButton
+{
+    if ([self.delegate respondsToSelector:@selector(didTapDoneButtonInYouTubeVideoViewController:)]) {
+        [self.delegate didTapDoneButtonInYouTubeVideoViewController:self];
+    }
 }
 
 #pragma mark - Accessors
@@ -158,7 +168,7 @@ const CGFloat YouTubeStandardPlayerHeight = 390;
             if ([components count] > 2) {
                 actionData = components[2];
             }
-
+            
             [self.delegate youTubeVideoViewController:self didReceiveEventNamed:actionName eventData:actionData];
         }
         return NO;

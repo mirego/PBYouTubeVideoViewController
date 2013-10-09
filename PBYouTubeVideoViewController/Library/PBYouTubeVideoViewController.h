@@ -57,7 +57,7 @@ extern NSString *const PBYouTubePlayerEventApiChange;
 @end
 
 
-@protocol PBYouTubeVideoViewControllerDelegate
+@protocol PBYouTubeVideoViewControllerDelegate <NSObject>
 
 /**
  * Called when an event is emitted by the YouTube player.
@@ -69,5 +69,13 @@ extern NSString *const PBYouTubePlayerEventApiChange;
  * @param eventData the data associated with the event. May be nil.
  */
 - (void)youTubeVideoViewController:(PBYouTubeVideoViewController *)viewController didReceiveEventNamed:(NSString *)eventName eventData:(NSString *)eventData;
+
+/**
+ * When the controller is presented in a UINavigationController, a 'Done' button
+ * is added to the navigationItem.
+ * This method is called when the 'Done' button is tapped.
+ */
+@optional
+- (void)didTapDoneButtonInYouTubeVideoViewController:(PBYouTubeVideoViewController *)viewController;
 
 @end
